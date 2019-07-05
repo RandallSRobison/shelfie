@@ -1,0 +1,17 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    width: 100vw;
+    height: 10vh;
+    background: #AB2A19;
+    display: flex;
+    align-items: center;
+}
+
+.shelfie {
+    width: 50%;
+    color: #fff;
+}
