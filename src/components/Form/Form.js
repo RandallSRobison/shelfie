@@ -1,69 +1,95 @@
-import React, { Component } from 'react'
-import './Form.css'
+import React, { Component } from "react";
+import "./Form.css";
 
 class Form extends Component {
-  constructor(){
-    super()
+  constructor() {
+    super();
 
     this.state = {
-      name: '',
+      product_name: "",
       price: 0,
-      image: ''
-    }
+      image_url: ""
+    };
   }
 
-handleChange = e => {
-  const {value, name} = e.target;
-  this.setState({
-    [name]: value
-  })
-}
+  handleChange = e => {
+    const { value, name } = e.target;
+    this.setState({
+      [name]: value
+    });
+  };
 
-addPart = e => {
-  // console.log('hit');
-  e.preventDefault();
+  addProduct = e => {
+    console.log('hit addProduct in Form');
+    e.preventDefault();
 
-  const {name, price, image} = this.state
+    const { product_name, price, image_url } = this.state;
+    console.log(product_name, price, image_url);
+    let newProduct = {
+      product_name,
+      price,
+      image_url
+    };
 
-  let newProduct = {
-    name,
-    price,
-    image
-  }
+    this.props.addProduct(newProduct);
+    
 
-  this.props.addPart(newProduct)
-  this.props.getProducts()
+    this.setState({
+      product_name: "",
+      price: 0,
+      image_url: ""
 
-  this.setState({
-    name: '',
-    price: 0,
-    image: ''
-  })
-}
+    });
+    this.props.getAll();
+  };
 
-cancel = e => {
-  console.log('hit ');
-  e.preventDefault()
+  cancel = e => {
 
-  this.setState({
-    name: '',
-    price: 0,
-    image: ''
-  })
-}
+    this.setState({
+      product_name: "",
+      price: 0,
+      image_url: ""
+    });
+  };
 
   render() {
+    const {product_name, price, image_url} = this.state
     return (
-      <div className='main'>
-        <form className='form'>
-          <div className='input-column'>
-            <input type="text" className='input-fields' placeholder='image url' onChange={this.handleChange}/>
-            <input type="text" className='input-fields' placeholder='product name' onChange={this.handleChange}/>
-            <input type="number" className='input-fields' placeholder='price' onChange={this.onChange}/>
+      <div className="main">
+        <form className="form">
+          <div className="input-column">
+            <input
+            name='image_url'
+              type="text"
+              className="input-fields"
+              placeholder="image url"
+              onChange={this.handleChange}
+              value={image_url}
+            />
+            <input
+              name='product_name'
+              type="text"
+              className="input-fields"
+              placeholder="product name"
+              onChange={this.handleChange}
+              value={product_name}
+            />
+            <input
+              name='price'
+              type="number"
+              className="input-fields"
+              placeholder="price"
+              onChange={this.onChange}
+              value={price}
+            />
           </div>
-          <div className='button-row'>
-            <button className='buttons' onClick={this.cancel}>cancel</button>
-            <button className='buttons' onClick={this.addPart}>add to inventory</button>
+          <div className="button-row">
+            <button className="buttons" onClick={e => this.cancel(e)}>
+              cancel
+            </button>
+            <button className="buttons" onClick={(e) => this.addProduct(e)}>
+              add to inventory
+            </button>
           </div>
         </form>
       </div>
